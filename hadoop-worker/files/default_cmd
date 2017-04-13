@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "starting sshd" >>/var/log/hadoop-worker.log
+/usr/sbin/sshd
+
+echo "starting Hadoop Datanode" >>/var/log/hadoop-worker.log
+$HADOOP_PREFIX/sbin/hadoop-daemon.sh start datanode 2>&1 >>/var/log/hadoop-worker.log
+
+/bin/bash

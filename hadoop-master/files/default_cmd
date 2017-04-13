@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# If this is the first time, format hdfs
+if [ ! -d "/phonelab-data/hdfs/name" ]
+then
+    echo "formatting HDFS"
+    $HADOOP_PREFIX/bin/hdfs namenode -format
+fi
+
+echo "starting Hadoop Namenode"
+$HADOOP_PREFIX/sbin/hadoop-daemon.sh start namenode
+
+echo "starting sshd"
+/usr/sbin/sshd
+
+/bin/bash

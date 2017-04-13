@@ -1,0 +1,6 @@
+<configuration>
+    <property>
+        <name>fs.default.name</name>
+        <value>hdfs://dirtydeeds.cse.buffalo.edu:9000</value>
+    </property>
+</configuration>
