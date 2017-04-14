@@ -12,7 +12,7 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/
 RUN echo "deb http://archive.ubuntu.com/ubuntu trusty-updates main universe" >> /etc/apt/sources.list
 
 # install a few other useful packages plus Open Jdk 7
-RUN apt-get update && apt-get upgrade -y && apt-get install -y less openjdk-7-jre-headless net-tools git screen vim-tiny sudo openssh-server iputils-ping python2.7 aria2
+RUN apt-get update && apt-get upgrade -y && apt-get install -y less openjdk-7-jre-headless net-tools git screen vim-tiny sudo openssh-server iputils-ping python2.7 aria2 build-essential gcc make
 
 # Install Hadoop and override the configuration
 RUN mkdir /usr/local/hadoop-install
@@ -23,17 +23,24 @@ RUN tar -xzf /usr/local/hadoop-install/hadoop-${HADOOP_VERSION}.tar.gz -C /usr/l
 RUN rm /usr/local/hadoop-install/hadoop-${HADOOP_VERSION}.tar.gz
 ENV HADOOP_PREFIX /usr/local/hadoop-install/hadoop-${HADOOP_VERSION}
 
+ENV HOME /root
+
 # go
-RUN aria2c -s 8 https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz -d /usr/local
-RUN tar -xzf /usr/local/go1.8.1.linux-amd64.tar.gz -C /usr/local
+RUN aria2c -s 8 https://storage.googleapis.com/golang/go1.8.linux-amd64.tar.gz -d /usr/local
+RUN tar -xzf /usr/local/go1.8.linux-amd64.tar.gz -C /usr/local
 RUN mkdir -p ${HOME}/workspace/go
 ENV GOPATH ${HOME}/workspace/go
 ENV PATH ${PATH}:/usr/local/go/bin
+ENV PATH $PATH:${HOME}/workspace/go/bin
 RUN echo 'export GOPATH=${HOME}/workspace/go' >> ${HOME}/.bashrc
 RUN echo 'export PATH=$PATH:/usr/local/go/bin' >> ${HOME}/.bashrc
+RUN echo 'export PATH=$PATH:${HOME}/workspace/go/bin' >> ${HOME}/.bashrc
 
 # go packages
-RUN go get github.com/gurupras/phonelab-go
+RUN /bin/bash -c 'go get github.com/shaseley/phonelab-go'
+RUN /bin/bash -c 'cd ${GOPATH}/src/github.com/shaseley/phonelab-go/phonelab-go && go get && go install'
+RUN /bin/bash -c 'cd ${GOPATH}/src/github.com/shaseley/phonelab-go/phonelab-go-server && go get && go install'
+RUN /bin/bash -c 'cd ${GOPATH}/src/github.com/shaseley/phonelab-go/phonelab-go-worker && go get && go install'
 
 # Finish any other image setup logic before this point
 # Beyond this point, most lines will be short commands that consume

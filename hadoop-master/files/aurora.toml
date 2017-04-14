@@ -1,0 +1,14 @@
+servers = []
+listen = "dirtydeeds.cse.buffalo.edu:3005"
+version = 2.0
+
+[openpage]
+enabled = true
+
+[auth]
+enabled = true
+password = "phonelab"
+username = "phonelab"
+
+[sample]
+storage = "{}"
