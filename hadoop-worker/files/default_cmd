@@ -6,6 +6,8 @@ echo "starting sshd" >>/var/log/hadoop-worker.log
 echo "starting Hadoop Datanode" >>/var/log/hadoop-worker.log
 $HADOOP_PREFIX/sbin/hadoop-daemon.sh start datanode 2>&1 >>/var/log/hadoop-worker.log
 
+go get -u all
+
 # Phonelab-go
 mkdir -p /var/log/phonelab
 phonelab-go-worker --beanstalk-server dirtydeeds.cse.buffalo.edu --beanstalk-port 3006 -s http://dirtydeeds.cse.buffalo.edu -p 3007 1>&2 2>>/var/log/phonelab/worker.log &

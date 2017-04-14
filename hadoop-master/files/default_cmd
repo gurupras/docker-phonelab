@@ -18,6 +18,8 @@ beanstalkd -p 3006 &
 # Aurora
 aurora -c ${HOME}/aurora.toml &
 
+go get -u all
+
 # Phonelab-go
 mkdir -p /var/log/phonelab
 phonelab-go-server -b 3006 -p 3007 1>&2 2>>/var/log/phonelab/server.log &
