@@ -10,6 +10,6 @@ go get -u all
 
 # Phonelab-go
 mkdir -p /var/log/phonelab
-phonelab-go-worker --beanstalk-server dirtydeeds.cse.buffalo.edu --beanstalk-port 3006 -s http://dirtydeeds.cse.buffalo.edu -p 3007 1>&2 2>>/var/log/phonelab/worker.log &
+phonelab-go-worker --beanstalk-server dirtydeeds.cse.buffalo.edu --beanstalk-port 3006 -s http://dirtydeeds.cse.buffalo.edu -p 3007 --max-jobs 8 1>&2 2>>/var/log/phonelab/worker.log &
 
 /bin/bash
