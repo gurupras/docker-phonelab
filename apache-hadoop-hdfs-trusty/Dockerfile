@@ -1,18 +1,18 @@
-# Base Ubuntu Trusty 14.04 LTS image
+# Base Ubuntu Xenial 16.04 LTS image
 #
-FROM ubuntu:trusty
-MAINTAINER shaseley@buffalo.edu
+FROM ubuntu:xenial
+MAINTAINER gurupras@buffalo.edu shaseley@buffalo.edu
 
 ENV HADOOP_VERSION 2.8.0
 # Setup a volume for data
 #VOLUME ["/data"]
 
 # Set correct source list
-RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
-RUN echo "deb http://archive.ubuntu.com/ubuntu trusty-updates main universe" >> /etc/apt/sources.list
+RUN echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" > /etc/apt/sources.list
+RUN echo "deb http://archive.ubuntu.com/ubuntu xenial-updates main universe" >> /etc/apt/sources.list
 
 # install a few other useful packages plus Open Jdk 7
-RUN apt-get update && apt-get upgrade -y && apt-get install -y less openjdk-7-jre-headless net-tools git screen vim-tiny sudo openssh-server iputils-ping python2.7 aria2 build-essential gcc make
+RUN apt-get update && apt-get upgrade -y && apt-get install -y apt-utils less openjdk-8-jre-headless net-tools git screen vim nano sudo openssh-server iputils-ping python2.7 aria2 gcc make
 
 # Install Hadoop and override the configuration
 RUN mkdir /usr/local/hadoop-install
@@ -54,7 +54,7 @@ COPY files/hadoop-env.sh ${HADOOP_PREFIX}/etc/hadoop/
 
 
 # Set JAVA_HOME
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
 # Setup sshd for starting worker nodes
 RUN mkdir /root/.ssh
