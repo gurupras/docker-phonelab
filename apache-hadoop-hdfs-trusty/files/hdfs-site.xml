@@ -15,4 +15,12 @@
 		<name>dfs.namenode.name.dir</name>
 		<value>file:///phonelab-data/hdfs/name</value>
 	</property>
+	<property>
+		<name>dfs.datanode.socket.write.timeout</name>
+		<value>10800000</value>
+	</property>
+	<property>
+		<name>dfs.client.socket-timeout</name>
+		<value>3600000</value>
+	</property>
 </configuration>
