@@ -65,4 +65,7 @@ RUN chmod go-wx /root/.ssh/authorized_keys
 RUN chmod go-rwx /root/.ssh/id_rsa
 RUN mkdir /var/run/sshd
 
+# Copy etc files
+COPY files/sysctl.conf /etc/
+COPY files/limits.conf /etc/security/
 RUN echo "StrictHostKeyChecking no" > /root/.ssh/config
