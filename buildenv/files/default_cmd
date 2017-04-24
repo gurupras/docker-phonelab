@@ -2,6 +2,11 @@
 
 go get -u all
 
+cd $GOPATH/src/github.com/shaseley/phonelab-go/phonelab-go && go install
+cd $GOPATH/src/github.com/shaseley/phonelab-go/phonelab-go-server && go install
+cd $GOPATH/src/github.com/shaseley/phonelab-go/phonelab-go-worker && go install
+
+
 echo "starting sshd" >>/var/log/hadoop-worker.log
 /usr/sbin/sshd
 
