@@ -1,0 +1,14 @@
+#!/bin/bash
+
+MASTER="dd"
+declare -a WORKERS=(dd sincity nightingale brightside finger testify)
+
+# Restart the master
+echo "----------------------------- SERVER -----------------------------"
+ssh ${MASTER} 'CONTAINER=`docker ps | grep master | rev | cut -d" " -f1 | rev`; docker kill $CONTAINER; docker rm $CONTAINER; cwd=`pwd` && cd ~/workspace/docker-phonelab && git pull origin master && make >/dev/null && cd $cwd; docker run --restart=always -itd -v /phonelab/phonelab-data:/phonelab-data --net=host hadoop-master:2.8.0'
+
+# Now for the workers
+for h in "${WORKERS[@]}"; do
+	echo "----------------------------- ${h} -----------------------------"
+	ssh $h 'CONTAINER=`docker ps | grep worker | rev | cut -d" " -f1 | rev`; docker kill $CONTAINER; docker rm $CONTAINER; cd ~/workspace/docker-phonelab && git pull origin master && make >/dev/null && ~/start_docker.sh'
+done
