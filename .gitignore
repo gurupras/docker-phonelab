@@ -1,2 +1,4 @@
 .*.sw*
 
+# Make sure you don't add the ngrok.yml file
+ngrok.yml

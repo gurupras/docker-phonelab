@@ -8,6 +8,10 @@ $HADOOP_PREFIX/sbin/hadoop-daemon.sh start datanode 2>&1 >>/var/log/hadoop-worke
 
 go get -u all
 
+cd $GOPATH/src/github.com/shaseley/phonelab-go/phonelab-go && go install
+cd $GOPATH/src/github.com/shaseley/phonelab-go/phonelab-go-server && go install
+cd $GOPATH/src/github.com/shaseley/phonelab-go/phonelab-go-worker && go install
+
 # Phonelab-go
 mkdir -p /var/log/phonelab
 phonelab-go-worker --beanstalk-server dirtydeeds.cse.buffalo.edu --beanstalk-port 3006 -s http://dirtydeeds.cse.buffalo.edu -p 3007 --max-jobs 8 1>&2 2>>/var/log/phonelab/worker.log &
