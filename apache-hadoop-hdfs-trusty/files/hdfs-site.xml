@@ -17,7 +17,7 @@
 	</property>
 	<property>
 		<name>dfs.datanode.socket.write.timeout</name>
-		<value>10800000</value>
+		<value>28800000</value>
 	</property>
 	<property>
 		<name>dfs.client.socket-timeout</name>
