@@ -17,10 +17,10 @@
 	</property>
 	<property>
 		<name>dfs.datanode.socket.write.timeout</name>
-		<value>28800000</value>
+		<value>86400000</value>
 	</property>
 	<property>
 		<name>dfs.client.socket-timeout</name>
-		<value>3600000</value>
+		<value>86400000</value>
 	</property>
 </configuration>
