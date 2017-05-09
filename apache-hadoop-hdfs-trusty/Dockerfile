@@ -42,6 +42,15 @@ RUN /bin/bash -c 'cd ${GOPATH}/src/github.com/shaseley/phonelab-go/phonelab-go &
 RUN /bin/bash -c 'cd ${GOPATH}/src/github.com/shaseley/phonelab-go/phonelab-go-server && go get && go install'
 RUN /bin/bash -c 'cd ${GOPATH}/src/github.com/shaseley/phonelab-go/phonelab-go-worker && go get && go install'
 
+# Setup sshd for starting worker nodes
+RUN mkdir /root/.ssh
+RUN chmod go-rx /root/.ssh
+COPY files/authorized_keys /root/.ssh/
+COPY files/id_rsa /root/.ssh/
+RUN chmod go-wx /root/.ssh/authorized_keys
+RUN chmod go-rwx /root/.ssh/id_rsa
+RUN mkdir /var/run/sshd
+
 # Finish any other image setup logic before this point
 # Beyond this point, most lines will be short commands that consume
 # no significant time during 'make'. For example, certain configuration files
@@ -51,19 +60,11 @@ RUN /bin/bash -c 'cd ${GOPATH}/src/github.com/shaseley/phonelab-go/phonelab-go-w
 COPY files/core-site.xml ${HADOOP_PREFIX}/etc/hadoop/
 COPY files/hdfs-site.xml ${HADOOP_PREFIX}/etc/hadoop/
 COPY files/hadoop-env.sh ${HADOOP_PREFIX}/etc/hadoop/
+COPY files/dfs.exclude   ${HADOOP_PREFIX}/etc/hadoop/
 
 
 # Set JAVA_HOME
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
-
-# Setup sshd for starting worker nodes
-RUN mkdir /root/.ssh
-RUN chmod go-rx /root/.ssh
-COPY files/authorized_keys /root/.ssh/
-COPY files/id_rsa /root/.ssh/
-RUN chmod go-wx /root/.ssh/authorized_keys
-RUN chmod go-rwx /root/.ssh/id_rsa
-RUN mkdir /var/run/sshd
 
 # Copy etc files
 COPY files/sysctl.conf /etc/
